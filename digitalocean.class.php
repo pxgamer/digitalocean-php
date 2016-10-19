@@ -29,9 +29,13 @@ class DigitalOcean
 
     public function setDroplet($dropletId = '')
     {
-        $this->dropletId = $dropletId;
-        if ($this->dropletId !== '') {
-            return true;
+        if ($this->isInitialised) {
+            $this->dropletId = $dropletId;
+            if ($this->dropletId !== '') {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
@@ -47,30 +51,34 @@ class DigitalOcean
 
     public function createSnapshot($name = '')
     {
-        $name = ($name !== '') ? $name : date('Y-m-d_h.m.s');
-        $snapshotUrl = $this->baseUrl.'/v2/droplets/'.$this->dropletId.'/actions';
-        $cu = curl_init();
+        if ($this->isInitialised) {
+            $name = ($name !== '') ? $name : date('Y-m-d_h.m.s');
+            $snapshotUrl = $this->baseUrl.'/v2/droplets/'.$this->dropletId.'/actions';
+            $cu = curl_init();
 
-        $data = (object) [
-          'type' => 'snapshot',
-          'name' => $name,
-        ];
+            $data = (object) [
+              'type' => 'snapshot',
+              'name' => $name,
+            ];
 
-        curl_setopt_array(
-          $cu,
-          [
-            CURLOPT_URL => $snapshotUrl,
-            CURLOPT_HTTPHEADER => $this->curlHeaders(),
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => json_encode($data),
-          ]
-        );
+            curl_setopt_array(
+              $cu,
+              [
+                CURLOPT_URL => $snapshotUrl,
+                CURLOPT_HTTPHEADER => $this->curlHeaders(),
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_POST => true,
+                CURLOPT_POSTFIELDS => json_encode($data),
+              ]
+            );
 
-        $res = curl_exec($cu);
-        $res = json_decode($res);
+            $res = curl_exec($cu);
+            $res = json_decode($res);
 
-        return ($res->action->status == 'in-progress') ? true : false;
+            return ($res->action->status == 'in-progress') ? true : false;
+        } else {
+            return false;
+        }
     }
 
     public function printAll()
