@@ -3,6 +3,7 @@
   "type": "library",
   "description": "An easy to use wrapper for the DigitalOcean API written in PHP.",
   "homepage": "https://github.com/PXgamer/digitalocean-php",
+  "license": "MIT",
   "authors": [
     {
       "name": "PXgamer",
