@@ -1,5 +1,7 @@
 <?php
 
+namespace pxgamer;
+
 class DigitalOcean
 {
     private $authKey, $dropletId = '';

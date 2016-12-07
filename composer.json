@@ -1,0 +1,31 @@
+{
+  "name": "pxgamer/digitalocean-php",
+  "type": "library",
+  "description": "An easy to use wrapper for the DigitalOcean API written in PHP.",
+  "homepage": "https://github.com/PXgamer/digitalocean-php",
+  "authors": [
+    {
+      "name": "PXgamer",
+      "email": "owzie123@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/PXgamer/digitalocean-php/issues"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/PXgamer/digitalocean-php"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "ext-curl": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "pxgamer\\": "src/"
+    }
+  }
+}
