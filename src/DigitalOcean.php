@@ -82,9 +82,4 @@ class DigitalOcean
             return false;
         }
     }
-
-    public function printAll()
-    {
-        print_r($this);
-    }
 }
