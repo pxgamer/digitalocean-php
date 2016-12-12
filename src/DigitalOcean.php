@@ -13,11 +13,13 @@ class DigitalOcean
     public function __construct($authKey = '')
     {
         $this->authKey = $authKey;
-        if ($this->authKey !== '') {
+        if ($this->authKey !== '')
+        {
             $this->ready();
 
             return true;
-        } else {
+        } else
+        {
             return false;
         }
     }
@@ -31,14 +33,18 @@ class DigitalOcean
 
     public function setDroplet($dropletId = '')
     {
-        if ($this->isInitialised) {
+        if ($this->isInitialised)
+        {
             $this->dropletId = $dropletId;
-            if ($this->dropletId !== '') {
+            if ($this->dropletId !== '')
+            {
                 return true;
-            } else {
+            } else
+            {
                 return false;
             }
-        } else {
+        } else
+        {
             return false;
         }
     }
@@ -46,39 +52,41 @@ class DigitalOcean
     private function curlHeaders()
     {
         return [
-        'Content-Type: '.$this->jsonType,
-        'Authorization: Bearer '.$this->authKey,
-      ];
+            'Content-Type: ' . $this->jsonType,
+            'Authorization: Bearer ' . $this->authKey,
+        ];
     }
 
     public function createSnapshot($name = '')
     {
-        if ($this->isInitialised) {
+        if ($this->isInitialised)
+        {
             $name = ($name !== '') ? $name : date('Y-m-d_h.m.s');
-            $snapshotUrl = $this->baseUrl.'/v2/droplets/'.$this->dropletId.'/actions';
+            $snapshotUrl = $this->baseUrl . '/v2/droplets/' . $this->dropletId . '/actions';
             $cu = curl_init();
 
-            $data = (object) [
-              'type' => 'snapshot',
-              'name' => $name,
+            $data = (object)[
+                'type' => 'snapshot',
+                'name' => $name,
             ];
 
             curl_setopt_array(
-              $cu,
-              [
-                CURLOPT_URL => $snapshotUrl,
-                CURLOPT_HTTPHEADER => $this->curlHeaders(),
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_POST => true,
-                CURLOPT_POSTFIELDS => json_encode($data),
-              ]
+                $cu,
+                [
+                    CURLOPT_URL => $snapshotUrl,
+                    CURLOPT_HTTPHEADER => $this->curlHeaders(),
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_POST => true,
+                    CURLOPT_POSTFIELDS => json_encode($data),
+                ]
             );
 
             $res = curl_exec($cu);
             $res = json_decode($res);
 
             return ($res->action->status == 'in-progress') ? true : false;
-        } else {
+        } else
+        {
             return false;
         }
     }
