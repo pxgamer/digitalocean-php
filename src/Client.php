@@ -28,7 +28,7 @@ class Client
 
     public function setDroplet($dropletId = '')
     {
-        if ($this->isInitialised) {
+        if (!$this->isInitialised) {
             return false;
         }
         $this->dropletId = $dropletId;
@@ -41,7 +41,7 @@ class Client
 
     public function createSnapshot($name = '')
     {
-        if ($this->isInitialised) {
+        if (!$this->isInitialised) {
             return false;
         }
         $name = ($name !== '') ? $name : date('Y-m-d_h.m.s');
