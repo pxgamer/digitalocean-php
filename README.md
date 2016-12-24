@@ -25,7 +25,7 @@ $digitalOcean = new \pxgamer\DigitalOcean\Client('API-KEY');
 ```
 ```php
 use \pxgamer\DigitalOcean\Client;
-$digitalOcean = new Client('API-KEY';
+$digitalOcean = new Client('API-KEY');
 ```
 
 ## Class Methods
