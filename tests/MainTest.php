@@ -1,13 +1,11 @@
 <?php
-use pxgamer\DigitalOcean;
+use pxgamer\DigitalOcean\Client;
 
 class MainTest extends PHPUnit_Framework_TestCase
 {
-
     public function testCanBeInitialised()
     {
-        $digitalOcean = new DigitalOcean();
-        $this->assertInstanceOf(DigitalOcean::class, $digitalOcean);
+        $digitalOcean = new Client;
+        $this->assertInstanceOf(Client::class, $digitalOcean);
     }
-
 }

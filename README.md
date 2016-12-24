@@ -6,24 +6,42 @@ An easy to use wrapper for the DigitalOcean API written in PHP.
 
 __Include the class:__
 - Using Composer  
+
 `composer require pxgamer/digitalocean-php`  
 ```php
 <?php
 require 'vendor/autoload.php';
-$do = new \pxgamer\DigitalOcean('API-KEY');
 ```
 - Including the file manually  
 ```php
 <?php
-include 'src/DigitalOcean.php';
-$do = new \pxgamer\DigitalOcean('API-KEY');
+include 'src/Client.php';
 ```
 
-## Example
+Once included, you can initialise the class using either of the following:
+
+```php
+$digitalOcean = new \pxgamer\DigitalOcean\Client('API-KEY');
+```
+```php
+use \pxgamer\DigitalOcean\Client;
+$digitalOcean = new Client('API-KEY';
+```
+
+## Class Methods
+
+Method Name      | Parameters  | Returns
+---------------- | ----------- | -------
+__construct()    | string      | `string (json)`
+setDroplet()     | string      | `string (json)`
+createSnapshot() | string      | `string (json)`
+
+## Examples
 
 ```php
 // createSnapshot
-$do = new \pxgamer\DigitalOcean('API-KEY');
+use \pxgamer\DigitalOcean\Client;
+$do = new Client('API-KEY';
 $do->setDroplet('DROPLET-ID');
 $do->createSnapshot('SNAPSHOT-NAME');
 ```
