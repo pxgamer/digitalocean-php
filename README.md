@@ -41,7 +41,7 @@ createSnapshot() | string      | `string (json)`
 ```php
 // createSnapshot
 use \pxgamer\DigitalOcean\Client;
-$do = new Client('API-KEY';
+$do = new Client('API-KEY');
 $do->setDroplet('DROPLET-ID');
 $do->createSnapshot('SNAPSHOT-NAME');
 ```
