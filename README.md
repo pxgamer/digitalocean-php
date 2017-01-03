@@ -31,7 +31,7 @@ $client = new Client;
 
 ##### Client
 - This is the main class and is used to hold the CURL functions. It also contains the API key, and should be called first.  
-- _This class __must__ be passed to other classes upon their initialisation._  
+- _This class **must** be passed to other classes upon their initialisation._  
 
 ##### Account
 - This class is used to retrieve account information.  
