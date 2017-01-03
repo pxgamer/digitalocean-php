@@ -32,12 +32,16 @@ $client = new Client;
 ##### Client
 - This is the main class and is used to hold the CURL functions. It also contains the API key, and should be called first.  
 - _This class __must__ be passed to other classes upon their initialisation._  
+
 ##### Account
 - This class is used to retrieve account information.  
+
 ##### Domains
 - This class is used to modify and retrieve domain information.  
+
 ##### Droplets
 - This class is used to manage multiple droplets, or all droplets for an account.  
+
 ##### Droplet
 - This class is used to manage droplets individually and can provides functions such as creating snapshots, enabling and disabling features, etc.  
 
