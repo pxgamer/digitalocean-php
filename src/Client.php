@@ -2,56 +2,58 @@
 
 namespace pxgamer\DigitalOcean;
 
+/**
+ * Class Client.
+ */
 class Client
 {
     const BASE_URL = 'https://api.digitalocean.com/v2';
 
-    private $authKey;
-
-    private $dropletId = '';
-
-    private $isInitialised = false;
+    public $authKey;
 
     private $jsonType = 'application/json';
 
-    public function __construct($authKey = '')
+    /**
+     * @param string $authKey
+     *
+     * @return bool
+     */
+    public function setAuthKey($authKey = '')
     {
         $this->authKey = $authKey;
-        if ($this->authKey !== '') {
-            $this->isInitialised = true;
 
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     }
 
-    public function setDroplet($dropletId = '')
+    /**
+     * @param $endpoint
+     *
+     * @return array|mixed
+     */
+    public function get($endpoint)
     {
-        if (!$this->isInitialised) {
-            return false;
-        }
-        $this->dropletId = $dropletId;
-        if ($this->dropletId !== '') {
-            return true;
-        } else {
-            return false;
-        }
+        $cu = curl_init();
+
+        curl_setopt_array(
+            $cu,
+            [
+                CURLOPT_URL => self::BASE_URL.$endpoint,
+                CURLOPT_HTTPHEADER => $this->curlHeaders(),
+                CURLOPT_SSL_VERIFYHOST => 0,
+                CURLOPT_SSL_VERIFYPEER => 0,
+                CURLOPT_RETURNTRANSFER => true,
+            ]
+        );
+
+        return $this->toArray(curl_exec($cu));
     }
 
-    public function createSnapshot($name = '')
-    {
-        if (!$this->isInitialised) {
-            return false;
-        }
-        $name = ($name !== '') ? $name : date('Y-m-d_h.m.s');
-
-        return $this->post('/droplets/' . $this->dropletId . '/actions', [
-            'type' => 'snapshot',
-            'name' => $name,
-        ]);
-    }
-
+    /**
+     * @param $endpoint
+     * @param $content
+     *
+     * @return array|mixed
+     */
     public function post($endpoint, $content)
     {
         $cu = curl_init();
@@ -59,7 +61,7 @@ class Client
         curl_setopt_array(
             $cu,
             [
-                CURLOPT_URL => self::BASE_URL . $endpoint,
+                CURLOPT_URL => self::BASE_URL.$endpoint,
                 CURLOPT_HTTPHEADER => $this->curlHeaders(),
                 CURLOPT_SSL_VERIFYHOST => 0,
                 CURLOPT_SSL_VERIFYPEER => 0,
@@ -69,14 +71,82 @@ class Client
             ]
         );
 
-        return curl_exec($cu);
+        return $this->toArray(curl_exec($cu));
     }
 
+    /**
+     * @param $endpoint
+     * @param $content
+     *
+     * @return array|mixed
+     */
+    public function put($endpoint, $content)
+    {
+        $cu = curl_init();
+
+        curl_setopt_array(
+            $cu,
+            [
+                CURLOPT_URL => self::BASE_URL.$endpoint,
+                CURLOPT_HTTPHEADER => $this->curlHeaders(),
+                CURLOPT_SSL_VERIFYHOST => 0,
+                CURLOPT_SSL_VERIFYPEER => 0,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_POST => true,
+                CURLOPT_POSTFIELDS => json_encode($content),
+                CURLOPT_CUSTOMREQUEST => 'PUT',
+            ]
+        );
+
+        return $this->toArray(curl_exec($cu));
+    }
+
+    /**
+     * @param $endpoint
+     *
+     * @return array|mixed
+     */
+    public function delete($endpoint)
+    {
+        $cu = curl_init();
+
+        curl_setopt_array(
+            $cu,
+            [
+                CURLOPT_URL => self::BASE_URL.$endpoint,
+                CURLOPT_HTTPHEADER => $this->curlHeaders(),
+                CURLOPT_SSL_VERIFYHOST => 0,
+                CURLOPT_SSL_VERIFYPEER => 0,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_CUSTOMREQUEST => 'DELETE',
+            ]
+        );
+
+        return $this->toArray(curl_exec($cu));
+    }
+
+    /**
+     * @return array
+     */
     private function curlHeaders()
     {
         return [
-            'Content-Type: ' . $this->jsonType,
-            'Authorization: Bearer ' . $this->authKey,
+            'Content-Type: '.$this->jsonType,
+            'Authorization: Bearer '.$this->authKey,
         ];
+    }
+
+    /**
+     * @param $string
+     *
+     * @return array|mixed
+     */
+    private function toArray($string)
+    {
+        if (is_string($string)) {
+            return json_decode($string, true);
+        } else {
+            return [];
+        }
     }
 }
