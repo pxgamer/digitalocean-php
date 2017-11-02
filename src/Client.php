@@ -39,8 +39,6 @@ class Client
             [
                 CURLOPT_URL => self::BASE_URL.$endpoint,
                 CURLOPT_HTTPHEADER => $this->curlHeaders(),
-                CURLOPT_SSL_VERIFYHOST => 0,
-                CURLOPT_SSL_VERIFYPEER => 0,
                 CURLOPT_RETURNTRANSFER => true,
             ]
         );
@@ -63,8 +61,6 @@ class Client
             [
                 CURLOPT_URL => self::BASE_URL.$endpoint,
                 CURLOPT_HTTPHEADER => $this->curlHeaders(),
-                CURLOPT_SSL_VERIFYHOST => 0,
-                CURLOPT_SSL_VERIFYPEER => 0,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_POST => true,
                 CURLOPT_POSTFIELDS => json_encode($content),
@@ -89,8 +85,6 @@ class Client
             [
                 CURLOPT_URL => self::BASE_URL.$endpoint,
                 CURLOPT_HTTPHEADER => $this->curlHeaders(),
-                CURLOPT_SSL_VERIFYHOST => 0,
-                CURLOPT_SSL_VERIFYPEER => 0,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_POST => true,
                 CURLOPT_POSTFIELDS => json_encode($content),
@@ -115,8 +109,6 @@ class Client
             [
                 CURLOPT_URL => self::BASE_URL.$endpoint,
                 CURLOPT_HTTPHEADER => $this->curlHeaders(),
-                CURLOPT_SSL_VERIFYHOST => 0,
-                CURLOPT_SSL_VERIFYPEER => 0,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_CUSTOMREQUEST => 'DELETE',
             ]

@@ -1,8 +1,9 @@
 <?php
 
 use pxgamer\DigitalOcean;
+use PHPUnit\Framework\TestCase;
 
-class MainTest extends PHPUnit_Framework_TestCase
+class MainTest extends TestCase
 {
     private $client;
 
