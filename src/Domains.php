@@ -20,12 +20,6 @@ class Domains
             $client = new Client();
         }
         $this->client = $client;
-
-        if ($this->client->authKey) {
-            return true;
-        }
-
-        return false;
     }
 
     /**

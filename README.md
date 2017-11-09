@@ -1,56 +1,56 @@
 # digitalocean-php
 
+[![Latest Version on Packagist][ico-version]][link-packagist]
+[![Software License][ico-license]](LICENSE.md)
+[![Build Status][ico-travis]][link-travis]
+[![Style CI][ico-styleci]][link-styleci]
+[![Code Coverage][ico-code-quality]][link-code-quality]
+[![Total Downloads][ico-downloads]][link-downloads]
+
 An easy to use wrapper for the DigitalOcean API written in PHP.
+
+## Structure
+
+```
+src/
+tests/
+vendor/
+```
+
+## Install
+
+Via Composer
+
+``` bash
+$ composer require pxgamer/digitalocean-php
+```
 
 ## Usage
 
-__Include the class:__
-- Using Composer  
-
-`composer require pxgamer/digitalocean-php`  
-```php
-<?php
-require 'vendor/autoload.php';
-```
-- Including the file manually  
-```php
-<?php
-include 'src/Client.php';
-```
-
-Once included, you can initialise the class using either of the following:
-
-```php
-$client = new \pxgamer\DigitalOcean\Client;
-```
 ```php
 use \pxgamer\DigitalOcean\Client;
-$client = new Client;
+$client = new Client();
 ```
-## Classes
 
-##### Client
+### Classes
+
+_Client_
 - This is the main class and is used to hold the CURL functions. It also contains the API key, and should be called first.  
 - _This class **must** be passed to other classes upon their initialisation._  
 
-##### Account
+_Account_
 - This class is used to retrieve account information.  
 
-##### Domains
+_Domains_
 - This class is used to modify and retrieve domain information.  
 
-##### Droplets
+_Droplets_
 - This class is used to manage multiple droplets, or all droplets for an account.  
 
-##### Droplet
+_Droplet_
 - This class is used to manage droplets individually and can provides functions such as creating snapshots, enabling and disabling features, etc.  
 
-## Getting started with Composer
 ```php
-<?php
-// Include Composer
-require 'vendor/autoload.php';
-
 // Use the specific classes as their short names
 use \pxgamer\DigitalOcean;
 
@@ -65,89 +65,117 @@ $droplets = new DigitalOcean\Droplets($client);
 $droplet  = new DigitalOcean\Droplet($client);
 ```
 
-## Methods
+### Methods
 
-### Client Class
-##### Initialise Client Class
+#### Client Class
+
 ```php
 /**
  * This is required to be initialised first.
  * It must be passed into all other classes.
  */
 use \pxgamer\DigitalOcean\Client;
-$client = new Client;
+$client = new Client();
 $client->setAuthKey('API_KEY');
 ```
 
-### Account Class
-##### Initialise Account Class
+#### Account Class
+
+_Initialise Account Class_
+
 ```php
 use \pxgamer\DigitalOcean\Account;
 $account = new Account($client);
 ```
-##### Getting Account Information
+
+_Getting Account Information_
+
 ```php
 $account->getAccount();
 ```
 
-### Domains Class
-##### Initialise Domains Class
+#### Domains Class
+
+_Initialise Domains Class_
+
 ```php
 use \pxgamer\DigitalOcean\Domains;
 $domains = new Domains($client);
 ```
-##### Getting a list of domains
+
+_Getting a list of domains_
+
 ```php
 $domains->listDomains();
 ```
-##### Getting information for a specific domain
+
+_Getting information for a specific domain_
+
 ```php
 $domains->getDomain('example.com');
 ```
-##### Create a new domain
+
+_Create a new domain_
+
 ```php
 $domains->createDomain('example.com');
 ```
-##### Deleting a domain
+
+_Deleting a domain_
+
 ```php
 $domains->deleteDomain('example.com');
 ```
 
-### Droplets Class
-##### Initialise Droplets Class
+#### Droplets Class
+
+_Initialise Droplets Class_
+
 ```php
 // Requires the Client class to be initialised
 use \pxgamer\DigitalOcean\Droplets;
 $droplets = new Droplets($client);
 ```
-##### Listing droplets
+
+_Listing droplets_
+
 ```php
 $droplets->listDroplets();
 ```
-##### Listing neighbours of Droplets (droplets in the same location)
+
+_Listing neighbours of Droplets (droplets in the same location)_
+
 ```php
 $droplets->listNeighbours();
 ```
 
-### Droplet Class
-##### Initialise Droplet Class
+#### Droplet Class
+
+_Initialise Droplet Class_
+
 ```php
 // Requires the Client class to be initialised
 use \pxgamer\DigitalOcean\Droplet;
 $droplet = new Droplet($client);
 ```
-##### Setting the Droplet ID
+
+_Setting the Droplet ID_
+
 ```php
 $droplet->setDroplet('DROPLET_ID');
 ```
-##### Getting information about a droplet
+
+_Getting information about a droplet_
+
 ```php
 // Requires the droplet ID to be set
 $droplet->getDroplet();
 ```
-##### Creating a Droplet
+
+_Creating a Droplet_
+
 ```php
-$array = ($dropletAttributes)[
+$dropletAttributes = (array)[
     'name' => 'example.com',       // Required
     'region' => 'nyc3',            // Required
     'size' => '512mb',             // Required
@@ -162,62 +190,86 @@ $array = ($dropletAttributes)[
         'web'
     ],
 ];
+
 $droplet->createDroplet($dropletAttributes);
 ```
-##### Deleting a Droplet
+
+_Deleting a Droplet_
+
 ```php
 // Requires the droplet ID to be set
 $droplet->deleteDroplet();
 ```
-##### Listing a Droplet's neighbours
+
+_Listing a Droplet's neighbours_
+
 ```php
 // Requires the droplet ID to be set
 $droplet->listNeighbours();
 ```
-##### Create a snapshot
+
+_Create a snapshot_
+
 ```php
 // Requires the droplet ID to be set
 $droplet->createSnapshot('SNAPSHOT-NAME');
 ```
-##### Enabling backups for a Droplet
+
+_Enabling backups for a Droplet_
+
 ```php
 // Requires the droplet ID to be set
 $droplet->enableBackups();
 ```
-##### Disabling backups for a Droplet
+
+_Disabling backups for a Droplet_
+
 ```php
 // Requires the droplet ID to be set
 $droplet->disableBackups();
 ```
-##### Rebooting a Droplet
+
+_Rebooting a Droplet_
+
 ```php
 // Requires the droplet ID to be set
 $droplet->reboot();
 ```
-##### Power Cycling a Droplet
+
+_Power Cycling a Droplet_
+
 ```php
 // Requires the droplet ID to be set
 $droplet->powerCycle();
 ```
-##### Shutting down a Droplet
+
+_Shutting down a Droplet_
+
 ```php
 // Requires the droplet ID to be set
 $droplet->shutdown();
 ```
-##### Powering off a Droplet
+
+_Powering off a Droplet_
+
 ```php
 // Requires the droplet ID to be set
 $droplet->powerOff();
 ```
-##### Powering on a Droplet
+
+_Powering on a Droplet_
+
 ```php
 // Requires the droplet ID to be set
 $droplet->powerOn();
 ```
-##### Resizing a Droplet
+
+_Resizing a Droplet_
+
 ```php
 /**
- * // Requires the droplet ID to be set
+ * Requires the droplet ID to be set
+ *
  * Attributes:
  * - $size [string] (e.g. '1gb')
  * - $increaseDiskSize [boolean] (e.g. false) - Determines whether this is a permanent resize or not
@@ -225,23 +277,73 @@ $droplet->powerOn();
 
 $droplet->resize('1gb', false);
 ```
-##### Reset a Droplet's password
+
+_Reset a Droplet's password_
+
 ```php
 // Requires the droplet ID to be set
 $droplet->passwordReset();
 ```
-##### Renaming a Droplet
+
+_Renaming a Droplet_
+
 ```php
 // Requires the droplet ID to be set
 $droplet->rename('NEW_DROPLET_NAME');
 ```
-##### Enable IPv6 for a Droplet
+
+_Enable IPv6 for a Droplet_
+
 ```php
 // Requires the droplet ID to be set
 $droplet->enableIPv6();
 ```
-##### Enable Private Networking for a Droplet
+
+_Enable Private Networking for a Droplet_
+
 ```php
 // Requires the droplet ID to be set
 $droplet->enablePrivateNetworking();
 ```
+
+## Change log
+
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+
+## Testing
+
+``` bash
+$ composer test
+```
+
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) for details.
+
+## Security
+
+If you discover any security related issues, please email owzie123@gmail.com instead of using the issue tracker.
+
+## Credits
+
+- [pxgamer][link-author]
+- [All Contributors][link-contributors]
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+[ico-version]: https://img.shields.io/packagist/v/pxgamer/digitalocean-php.svg?style=flat-square
+[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/pxgamer/digitalocean-php/master.svg?style=flat-square
+[ico-styleci]: https://styleci.io/repos/71349574/shield
+[ico-code-quality]: https://img.shields.io/codecov/c/github/pxgamer/digitalocean-php.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/pxgamer/digitalocean-php.svg?style=flat-square
+
+[link-packagist]: https://packagist.org/packages/pxgamer/digitalocean-php
+[link-travis]: https://travis-ci.org/pxgamer/digitalocean-php
+[link-styleci]: https://styleci.io/repos/71349574
+[link-code-quality]: https://codecov.io/gh/pxgamer/digitalocean-php
+[link-downloads]: https://packagist.org/packages/pxgamer/digitalocean-php
+[link-author]: https://github.com/pxgamer
+[link-contributors]: ../../contributors
