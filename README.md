@@ -29,7 +29,7 @@ $ composer require pxgamer/digitalocean-php
 
 ```php
 use \pxgamer\DigitalOcean\Client;
-$client = new Client;
+$client = new Client();
 ```
 
 ### Classes
@@ -175,7 +175,7 @@ $droplet->getDroplet();
 _Creating a Droplet_
 
 ```php
-$array = ($dropletAttributes)[
+$dropletAttributes = (array)[
     'name' => 'example.com',       // Required
     'region' => 'nyc3',            // Required
     'size' => '512mb',             // Required
@@ -190,6 +190,7 @@ $array = ($dropletAttributes)[
         'web'
     ],
 ];
+
 $droplet->createDroplet($dropletAttributes);
 ```
 
@@ -267,7 +268,8 @@ _Resizing a Droplet_
 
 ```php
 /**
- * // Requires the droplet ID to be set
+ * Requires the droplet ID to be set
+ *
  * Attributes:
  * - $size [string] (e.g. '1gb')
  * - $increaseDiskSize [boolean] (e.g. false) - Determines whether this is a permanent resize or not
