@@ -5,32 +5,13 @@ namespace pxgamer\DigitalOcean;
 /**
  * Class Account.
  */
-class Account
+class Account extends Sector
 {
-    public $client;
-
-    /**
-     * Domains constructor.
-     *
-     * @param Client|null $client
-     */
-    public function __construct(Client $client = null)
-    {
-        if (is_null($client)) {
-            $client = new Client();
-        }
-        $this->client = $client;
-    }
-
     /**
      * @return array|bool
      */
     public function getAccount()
     {
-        if (!$this->client->authKey) {
-            return false;
-        }
-
-        return $this->client->get('/account');
+        return $this->get('/account');
     }
 }
