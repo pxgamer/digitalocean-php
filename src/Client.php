@@ -33,42 +33,50 @@ class Client
     }
 
     /**
-     *
+     * @return Account
      */
     public function account()
     {
         if (!($this->account instanceof Account)) {
             $this->account = new Account($this->authKey);
         }
+
+        return $this->account;
     }
 
     /**
-     *
+     * @return Domains
      */
     public function domains()
     {
         if (!($this->domains instanceof Domains)) {
             $this->domains = new Domains($this->authKey);
         }
+
+        return $this->domains;
     }
 
     /**
-     *
+     * @return Droplet
      */
     public function droplet()
     {
         if (!($this->droplet instanceof Droplet)) {
             $this->droplet = new Droplet($this->authKey);
         }
+
+        return $this->droplet;
     }
 
     /**
-     *
+     * @return Droplets
      */
     public function droplets()
     {
         if (!($this->droplets instanceof Droplets)) {
             $this->droplets = new Droplets($this->authKey);
         }
+
+        return $this->droplets;
     }
 }
