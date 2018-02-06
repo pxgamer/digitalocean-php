@@ -6,17 +6,19 @@ use PHPUnit\Framework\TestCase;
 
 class ClientTest extends TestCase
 {
+    const API_KEY = '';
+
     public function testCanSetAuthorizationKey()
     {
         $client = new Client();
-        $client->setAuthKey('API_KEY');
+        $client->setAuthKey(self::API_KEY);
 
         $this->assertTrue($client->authKey == 'API_KEY');
     }
 
     public function testCanGetApiResponse()
     {
-        $client = new Client();
+        $client = new Sector(self::API_KEY);
         $response = $client->get('/');
 
         $this->assertArrayHasKey('id', $response);
