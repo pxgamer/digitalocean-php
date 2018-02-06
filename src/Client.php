@@ -4,6 +4,11 @@ namespace pxgamer\DigitalOcean;
 
 /**
  * Class Client.
+ *
+ * @property Account  $account
+ * @property Domains  $domains
+ * @property Droplet  $droplet
+ * @property Droplets $droplets
  */
 class Client
 {
@@ -11,17 +16,13 @@ class Client
 
     public $authKey;
 
-    private $jsonType = 'application/json';
-
     /**
      * @param string $authKey
      *
-     * @return bool
+     * @return void
      */
-    public function setAuthKey($authKey = '')
+    public function setAuthKey(string $authKey)
     {
         $this->authKey = $authKey;
-
-        return true;
     }
 }
