@@ -5,38 +5,16 @@ namespace pxgamer\DigitalOcean;
 /**
  * Class Droplet.
  */
-class Droplet
+class Droplet extends Sector
 {
-    private $dropletId = '';
-
-    public $client;
-
-    /**
-     * Droplet constructor.
-     *
-     * @param Client|null $client
-     */
-    public function __construct(Client $client = null)
-    {
-        if (is_null($client)) {
-            $client = new Client();
-        }
-        $this->client = $client;
-    }
+    private $dropletId;
 
     /**
      * @param string $dropletId
-     *
-     * @return bool
      */
-    public function setDroplet($dropletId = '')
+    public function setDroplet(string $dropletId)
     {
         $this->dropletId = $dropletId;
-        if ($this->dropletId !== '') {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     /**
@@ -44,27 +22,19 @@ class Droplet
      */
     public function getDroplet()
     {
-        if (!$this->client->authKey) {
-            return false;
-        }
-
-        return $this->client->get('/droplets/'.$this->dropletId);
+        return $this->get('/droplets/'.$this->dropletId);
     }
 
     /**
-     * @param null $attributes
+     * @param \stdClass $attributes
      *
      * @return array|bool
      *
      * @internal param string $name
      */
-    public function createDroplet($attributes = null)
+    public function createDroplet(\stdClass $attributes)
     {
-        if (!$this->client->authKey || !is_object($attributes)) {
-            return false;
-        }
-
-        return $this->client->post('/droplets', $attributes);
+        return $this->post('/droplets', $attributes);
     }
 
     /**
@@ -72,11 +42,7 @@ class Droplet
      */
     public function deleteDroplet()
     {
-        if (!$this->client->authKey) {
-            return false;
-        }
-
-        return $this->client->delete('/droplets/'.$this->dropletId);
+        return $this->delete('/droplets/'.$this->dropletId);
     }
 
     /**
@@ -84,11 +50,7 @@ class Droplet
      */
     public function listNeighbours()
     {
-        if (!$this->client->authKey) {
-            return false;
-        }
-
-        return $this->client->get('/droplets/'.$this->dropletId.'/neighbors');
+        return $this->get('/droplets/'.$this->dropletId.'/neighbors');
     }
 
     /**
@@ -96,14 +58,11 @@ class Droplet
      *
      * @return array|bool
      */
-    public function createSnapshot($name = '')
+    public function createSnapshot(string $name = null)
     {
-        if (!$this->client->authKey) {
-            return false;
-        }
-        $name = ($name !== '') ? $name : date('Y-m-d_h.m.s');
+        $name = $name ?? date('Y-m-d_h.m.s');
 
-        return $this->client->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('/droplets/'.$this->dropletId.'/actions', [
             'type' => 'snapshot',
             'name' => $name,
         ]);
@@ -114,11 +73,7 @@ class Droplet
      */
     public function enableBackups()
     {
-        if (!$this->client->authKey) {
-            return false;
-        }
-
-        return $this->client->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('/droplets/'.$this->dropletId.'/actions', [
             'type' => 'enable_backups',
         ]);
     }
@@ -128,11 +83,7 @@ class Droplet
      */
     public function disableBackups()
     {
-        if (!$this->client->authKey) {
-            return false;
-        }
-
-        return $this->client->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('/droplets/'.$this->dropletId.'/actions', [
             'type' => 'enable_backups',
         ]);
     }
@@ -142,11 +93,7 @@ class Droplet
      */
     public function reboot()
     {
-        if (!$this->client->authKey) {
-            return false;
-        }
-
-        return $this->client->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('/droplets/'.$this->dropletId.'/actions', [
             'type' => 'reboot',
         ]);
     }
@@ -156,11 +103,7 @@ class Droplet
      */
     public function powerCycle()
     {
-        if (!$this->client->authKey) {
-            return false;
-        }
-
-        return $this->client->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('/droplets/'.$this->dropletId.'/actions', [
             'type' => 'power_cycle',
         ]);
     }
@@ -170,11 +113,7 @@ class Droplet
      */
     public function shutdown()
     {
-        if (!$this->client->authKey) {
-            return false;
-        }
-
-        return $this->client->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('/droplets/'.$this->dropletId.'/actions', [
             'type' => 'shutdown',
         ]);
     }
@@ -184,11 +123,7 @@ class Droplet
      */
     public function powerOff()
     {
-        if (!$this->client->authKey) {
-            return false;
-        }
-
-        return $this->client->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('/droplets/'.$this->dropletId.'/actions', [
             'type' => 'power_off',
         ]);
     }
@@ -198,11 +133,7 @@ class Droplet
      */
     public function powerOn()
     {
-        if (!$this->client->authKey) {
-            return false;
-        }
-
-        return $this->client->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('/droplets/'.$this->dropletId.'/actions', [
             'type' => 'power_on',
         ]);
     }
@@ -215,11 +146,7 @@ class Droplet
      */
     public function resize($size, $increaseDiskSize = false)
     {
-        if (!$this->client->authKey) {
-            return false;
-        }
-
-        return $this->client->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('/droplets/'.$this->dropletId.'/actions', [
             'type' => 'resize',
             'disk' => $increaseDiskSize,
             'size' => $size,
@@ -231,11 +158,7 @@ class Droplet
      */
     public function passwordReset()
     {
-        if (!$this->client->authKey) {
-            return false;
-        }
-
-        return $this->client->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('/droplets/'.$this->dropletId.'/actions', [
             'type' => 'password_reset',
         ]);
     }
@@ -247,11 +170,7 @@ class Droplet
      */
     public function rename($name)
     {
-        if (!$this->client->authKey) {
-            return false;
-        }
-
-        return $this->client->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('/droplets/'.$this->dropletId.'/actions', [
             'type' => 'rename',
             'name' => $name,
         ]);
@@ -262,11 +181,7 @@ class Droplet
      */
     public function enableIPv6()
     {
-        if (!$this->client->authKey) {
-            return false;
-        }
-
-        return $this->client->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('/droplets/'.$this->dropletId.'/actions', [
             'type' => 'enable_ipv6',
         ]);
     }
@@ -276,11 +191,7 @@ class Droplet
      */
     public function enablePrivateNetworking()
     {
-        if (!$this->client->authKey) {
-            return false;
-        }
-
-        return $this->client->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('/droplets/'.$this->dropletId.'/actions', [
             'type' => 'enable_private_networking',
         ]);
     }
