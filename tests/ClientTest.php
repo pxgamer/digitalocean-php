@@ -4,21 +4,31 @@ namespace pxgamer\DigitalOcean;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class ClientTest
+ */
 class ClientTest extends TestCase
 {
-    const API_KEY = '';
+    /**
+     * The auth key.
+     */
+    private $authKey;
 
-    public function testCanSetAuthorizationKey()
+    /**
+     * @var Client
+     */
+    private $client;
+
+    public function setUp()
     {
-        $client = new Client();
-        $client->setAuthKey(self::API_KEY);
+        $this->authKey = getenv('DIGITALOCEAN_API_KEY') ?? '';
 
-        $this->assertTrue($client->authKey == 'API_KEY');
+        $this->client = new Client($this->authKey);
     }
 
     public function testCanGetApiResponse()
     {
-        $client = new Sector(self::API_KEY);
+        $client = new Sector($this->authKey);
         $response = $client->get('/');
 
         $this->assertArrayHasKey('id', $response);
