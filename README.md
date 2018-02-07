@@ -35,20 +35,20 @@ $client = new Client($apiKey);
 ### Classes
 
 _Client_
-- This is the main class and is used to hold the CURL functions. It also contains the API key, and should be called first.  
-- _This class **must** be passed to other classes upon their initialisation._  
+- This is the main class and is used to hold the CURL functions. It also contains the API key, and should be called first.
+- _This class **must** be passed to other classes upon their initialisation._
 
 _Account_
-- This class is used to retrieve account information.  
+- This class is used to retrieve account information.
 
 _Domains_
-- This class is used to modify and retrieve domain information.  
+- This class is used to modify and retrieve domain information.
 
 _Droplets_
-- This class is used to manage multiple droplets, or all droplets for an account.  
+- This class is used to manage multiple droplets, or all droplets for an account.
 
 _Droplet_
-- This class is used to manage droplets individually and can provides functions such as creating snapshots, enabling and disabling features, etc.  
+- This class is used to manage droplets individually and can provides functions such as creating snapshots, enabling and disabling features, etc.
 
 ```php
 // Use the specific classes as their short names
@@ -120,25 +120,10 @@ _Listing neighbours of Droplets (droplets in the same location)_
 $client->droplets()->listNeighbours();
 ```
 
-#### Droplet Class
-
-_Setting the Droplet ID_
+_Creating a new Droplet_
 
 ```php
-$client->droplet()->setDroplet($dropletId);
-```
-
-_Getting information about a droplet_
-
-```php
-$client->droplet()->setDroplet();
-$client->droplet()->getDroplet();
-```
-
-_Creating a Droplet_
-
-```php
-$client->droplet()->createDroplet([
+$client->droplets()->createDroplet([
     'name' => 'example.com',       // Required
     'region' => 'nyc3',            // Required
     'size' => '512mb',             // Required
@@ -155,116 +140,108 @@ $client->droplet()->createDroplet([
 ]);
 ```
 
+#### Droplet Class
+
+_Getting information about a droplet_
+
+```php
+$client->droplet($dropletId)->getDroplet();
+```
+
 _Deleting a Droplet_
 
 ```php
-$client->droplet()->setDroplet($dropletId);
-$client->droplet()->deleteDroplet();
+$client->droplet($dropletId)->deleteDroplet();
 ```
 
 _Listing a Droplet's neighbours_
 
 ```php
-$client->droplet()->setDroplet($dropletId);
-$client->droplet()->listNeighbours();
+$client->droplet($dropletId)->listNeighbours();
 ```
 
 _Create a snapshot_
 
 ```php
-$client->droplet()->setDroplet($dropletId);
-$client->droplet()->createSnapshot('SNAPSHOT-NAME');
+$client->droplet($dropletId)->createSnapshot('SNAPSHOT-NAME');
 ```
 
 _Enabling backups for a Droplet_
 
 ```php
-$client->droplet()->setDroplet($dropletId);
-$client->droplet()->enableBackups();
+$client->droplet($dropletId)->enableBackups();
 ```
 
 _Disabling backups for a Droplet_
 
 ```php
-$client->droplet()->setDroplet($dropletId);
-$client->droplet()->disableBackups();
+$client->droplet($dropletId)->disableBackups();
 ```
 
 _Rebooting a Droplet_
 
 ```php
-$client->droplet()->setDroplet($dropletId);
-$client->droplet()->reboot();
+$client->droplet($dropletId)->reboot();
 ```
 
 _Power Cycling a Droplet_
 
 ```php
-$client->droplet()->setDroplet($dropletId);
-$client->droplet()->powerCycle();
+$client->droplet($dropletId)->powerCycle();
 ```
 
 _Shutting down a Droplet_
 
 ```php
-$client->droplet()->setDroplet($dropletId);
-$client->droplet()->shutdown();
+$client->droplet($dropletId)->shutdown();
 ```
 
 _Powering off a Droplet_
 
 ```php
-$client->droplet()->setDroplet($dropletId);
-$client->droplet()->powerOff();
+$client->droplet($dropletId)->powerOff();
 ```
 
 _Powering on a Droplet_
 
 ```php
-$client->droplet()->setDroplet($dropletId);
-$client->droplet()->powerOn();
+$client->droplet($dropletId)->powerOn();
 ```
 
 _Resizing a Droplet_
 
 ```php
-$client->droplet()->setDroplet($dropletId);
-
 /**
  * Attributes:
  * - $size [string] (e.g. '1gb')
  * - $increaseDiskSize [boolean] (e.g. false) - Determines whether this is a permanent resize or not
  */
 
-$client->droplet()->resize('1gb', false);
+$client->droplet($dropletId)->resize('1gb', false);
 ```
 
 _Reset a Droplet's password_
 
 ```php
-$client->droplet()->setDroplet($dropletId);
-$client->droplet()->passwordReset();
+$client->droplet($dropletId)->passwordReset();
 ```
 
 _Renaming a Droplet_
 
 ```php
-$client->droplet()->setDroplet($dropletId);
-$client->droplet()->rename('NEW_DROPLET_NAME');
+$client->droplet($dropletId)->rename('NEW_DROPLET_NAME');
 ```
 
 _Enable IPv6 for a Droplet_
 
 ```php
-$client->droplet()->setDroplet($dropletId);
-$client->droplet()->enableIPv6();
+$client->droplet($dropletId)->enableIPv6();
 ```
 
 _Enable Private Networking for a Droplet_
 
 ```php
-$client->droplet()->setDroplet($dropletId);
-$client->droplet()->enablePrivateNetworking();
+$client->droplet($dropletId)->enablePrivateNetworking();
 ```
 
 ## Change log
@@ -274,7 +251,6 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 ## Testing
 
 ```bash
-$ export DIGITALOCEAN_API_KEY=...
 $ composer test
 ```
 
