@@ -45,7 +45,7 @@ class ClientTest extends TestCase
      */
     public function testCanGetDropletInstance()
     {
-        $response = $this->client->droplet();
+        $response = $this->client->droplet($this->dropletTestId);
 
         $this->assertInstanceOf(Droplet::class, $response);
     }
