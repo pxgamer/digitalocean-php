@@ -12,129 +12,85 @@ class Sector
      */
     protected $authKey;
     /**
-     * @var string
+     * @var \GuzzleHttp\Client
      */
-    private $jsonType = 'application/json';
+    protected $guzzle;
 
     public function __construct(string $authKey)
     {
         $this->authKey = $authKey;
+        $this->guzzle = new \GuzzleHttp\Client([
+            'base_uri' => Client::BASE_URL,
+            'headers'  => [
+                'Content-Type'  => 'application/json',
+                'Authorization' => 'Bearer '.$this->authKey,
+            ],
+        ]);
     }
 
     /**
-     * @param $endpoint
+     * @param string $endpoint
      *
      * @return array|mixed
      */
-    public function get($endpoint)
+    public function get(string $endpoint)
     {
-        $cu = curl_init();
-
-        curl_setopt_array(
-            $cu,
-            [
-                CURLOPT_URL            => Client::BASE_URL.$endpoint,
-                CURLOPT_HTTPHEADER     => $this->curlHeaders(),
-                CURLOPT_RETURNTRANSFER => true,
-            ]
+        return \GuzzleHttp\json_decode(
+            $this->guzzle
+                ->get(Client::BASE_URL.$endpoint)
+                ->getBody()
+                ->getContents()
         );
-
-        return $this->toArray(curl_exec($cu));
     }
 
     /**
-     * @param $endpoint
-     * @param $content
+     * @param string $endpoint
+     * @param array  $body
      *
      * @return array|mixed
      */
-    public function post($endpoint, $content)
+    public function post(string $endpoint, array $body)
     {
-        $cu = curl_init();
-
-        curl_setopt_array(
-            $cu,
-            [
-                CURLOPT_URL            => Client::BASE_URL.$endpoint,
-                CURLOPT_HTTPHEADER     => $this->curlHeaders(),
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_POST           => true,
-                CURLOPT_POSTFIELDS     => json_encode($content),
-            ]
+        return \GuzzleHttp\json_decode(
+            $this->guzzle
+                ->post(Client::BASE_URL.$endpoint, [
+                    'body' => $body,
+                ])
+                ->getBody()
+                ->getContents()
         );
-
-        return $this->toArray(curl_exec($cu));
     }
 
     /**
-     * @param $endpoint
-     * @param $content
+     * @param string $endpoint
+     * @param array  $body
      *
      * @return array|mixed
      */
-    public function put($endpoint, $content)
+    public function put(string $endpoint, array $body)
     {
-        $cu = curl_init();
-
-        curl_setopt_array(
-            $cu,
-            [
-                CURLOPT_URL            => Client::BASE_URL.$endpoint,
-                CURLOPT_HTTPHEADER     => $this->curlHeaders(),
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_POST           => true,
-                CURLOPT_POSTFIELDS     => json_encode($content),
-                CURLOPT_CUSTOMREQUEST  => 'PUT',
-            ]
+        return \GuzzleHttp\json_decode(
+            $this->guzzle
+                ->put(Client::BASE_URL.$endpoint, [
+                    'body' => $body,
+                ])
+                ->getBody()
+                ->getContents()
         );
-
-        return $this->toArray(curl_exec($cu));
     }
 
     /**
-     * @param $endpoint
+     * @param string $endpoint
      *
      * @return array|mixed
      */
-    public function delete($endpoint)
+    public function delete(string $endpoint)
     {
-        $cu = curl_init();
-
-        curl_setopt_array(
-            $cu,
-            [
-                CURLOPT_URL            => Client::BASE_URL.$endpoint,
-                CURLOPT_HTTPHEADER     => $this->curlHeaders(),
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_CUSTOMREQUEST  => 'DELETE',
-            ]
+        return \GuzzleHttp\json_decode(
+            $this->guzzle
+                ->delete(Client::BASE_URL.$endpoint)
+                ->getBody()
+                ->getContents()
         );
-
-        return $this->toArray(curl_exec($cu));
-    }
-
-    /**
-     * @return array
-     */
-    private function curlHeaders()
-    {
-        return [
-            'Content-Type: '.$this->jsonType,
-            'Authorization: Bearer '.$this->authKey,
-        ];
-    }
-
-    /**
-     * @param $string
-     *
-     * @return array|mixed
-     */
-    private function toArray($string)
-    {
-        if (is_string($string)) {
-            return json_decode($string, true);
-        } else {
-            return [];
-        }
     }
 }
