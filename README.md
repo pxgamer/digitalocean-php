@@ -21,7 +21,7 @@ vendor/
 
 Via Composer
 
-``` bash
+```bash
 $ composer require pxgamer/digitalocean-php
 ```
 
@@ -273,7 +273,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 ## Testing
 
-``` bash
+```bash
 $ export DIGITALOCEAN_API_KEY=...
 $ composer test
 ```
