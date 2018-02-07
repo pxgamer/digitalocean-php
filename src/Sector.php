@@ -66,24 +66,6 @@ class Sector
 
     /**
      * @param string $endpoint
-     * @param array  $body
-     *
-     * @return array|mixed
-     */
-    public function put(string $endpoint, array $body)
-    {
-        return \GuzzleHttp\json_decode(
-            $this->guzzle
-                ->put($endpoint, [
-                    'body' => \GuzzleHttp\json_encode($body),
-                ])
-                ->getBody()
-                ->getContents()
-        );
-    }
-
-    /**
-     * @param string $endpoint
      *
      * @return bool
      */
