@@ -18,6 +18,10 @@ class TestCase extends PHPUnitTestCase
      * @var Client
      */
     protected $client;
+    /**
+     * @var string
+     */
+    protected $dropletTestId = 'droplet-test-id';
 
     /**
      * Set up the test class variables.
