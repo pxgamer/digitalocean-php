@@ -3,33 +3,12 @@
 namespace pxgamer\DigitalOcean;
 
 use GuzzleHttp\Exception\ClientException;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Class ClientTest
  */
 class ClientTest extends TestCase
 {
-    /**
-     * The auth key.
-     */
-    private $authKey;
-
-    /**
-     * @var Client
-     */
-    private $client;
-
-    /**
-     *
-     */
-    public function setUp()
-    {
-        $this->authKey = getenv('DIGITALOCEAN_API_KEY') ?? '';
-
-        $this->client = new Client($this->authKey);
-    }
-
     /**
      * @throws \Exception
      */
