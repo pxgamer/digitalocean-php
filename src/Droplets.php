@@ -16,6 +16,18 @@ class Droplets extends Sector
     }
 
     /**
+     * @param array $attributes
+     *
+     * @return array|bool
+     *
+     * @internal param string $name
+     */
+    public function createDroplet(array $attributes)
+    {
+        return $this->post('droplets', $attributes);
+    }
+
+    /**
      * @return array|bool
      */
     public function listNeighbours()
