@@ -34,4 +34,32 @@ class ClientTest extends TestCase
         $this->assertArrayHasKey('id', $response);
         $this->assertArrayHasKey('message', $response);
     }
+
+    public function testCanGetAccountInstance()
+    {
+        $response = $this->client->account();
+
+        $this->assertInstanceOf(Account::class, $response);
+    }
+
+    public function testCanGetDomainsInstance()
+    {
+        $response = $this->client->domains();
+
+        $this->assertInstanceOf(Domains::class, $response);
+    }
+
+    public function testCanGetDropletInstance()
+    {
+        $response = $this->client->droplet();
+
+        $this->assertInstanceOf(Droplet::class, $response);
+    }
+
+    public function testCanGetDropletsInstance()
+    {
+        $response = $this->client->droplets();
+
+        $this->assertInstanceOf(Droplets::class, $response);
+    }
 }
