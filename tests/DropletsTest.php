@@ -2,6 +2,10 @@
 
 namespace pxgamer\DigitalOcean;
 
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
+
 /**
  * Class DropletsTest
  */
@@ -12,7 +16,13 @@ class DropletsTest extends TestCase
      */
     public function testCanGetDropletsList()
     {
-        $response = $this->client->droplets()->listDroplets();
+        $mock = new MockHandler([
+            new Response(200, [], json_encode(new \stdClass())),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+
+        $response = (new Droplets($this->authKey, $handler))->listDroplets();
 
         $this->assertInstanceOf(\stdClass::class, $response);
     }
@@ -22,7 +32,13 @@ class DropletsTest extends TestCase
      */
     public function testCanGetDropletsNeighbours()
     {
-        $response = $this->client->droplets()->listNeighbours();
+        $mock = new MockHandler([
+            new Response(200, [], json_encode(new \stdClass())),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+
+        $response = (new Droplets($this->authKey, $handler))->listNeighbours();
 
         $this->assertInstanceOf(\stdClass::class, $response);
     }
