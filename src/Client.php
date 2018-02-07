@@ -10,7 +10,7 @@ class Client
     /**
      * The API base URI.
      */
-    const BASE_URL = 'https://api.digitalocean.com/v2';
+    const BASE_URL = 'https://api.digitalocean.com/v2/';
 
     /**
      * @var string
