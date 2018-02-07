@@ -12,6 +12,6 @@ class Account extends Sector
      */
     public function getAccount()
     {
-        return $this->get('/account');
+        return $this->get('account');
     }
 }

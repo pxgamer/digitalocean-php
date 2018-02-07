@@ -12,7 +12,7 @@ class Domains extends Sector
      */
     public function listDomains()
     {
-        return $this->get('/domains');
+        return $this->get('domains');
     }
 
     /**
@@ -22,7 +22,7 @@ class Domains extends Sector
      */
     public function getDomain(string $domain_name)
     {
-        return $this->get('/domains/'.$domain_name);
+        return $this->get('domains/'.$domain_name);
     }
 
     /**
@@ -32,7 +32,7 @@ class Domains extends Sector
      */
     public function createDomain(\stdClass $attributes = null)
     {
-        return $this->post('/domains', $attributes);
+        return $this->post('domains', $attributes);
     }
 
     /**
@@ -42,6 +42,6 @@ class Domains extends Sector
      */
     public function deleteDomain(string $domain_name)
     {
-        return $this->delete('/domains/'.$domain_name);
+        return $this->delete('domains/'.$domain_name);
     }
 }

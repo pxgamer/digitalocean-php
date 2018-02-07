@@ -12,7 +12,7 @@ class Droplets extends Sector
      */
     public function listDroplets()
     {
-        return $this->get('/droplets');
+        return $this->get('droplets');
     }
 
     /**
@@ -20,6 +20,6 @@ class Droplets extends Sector
      */
     public function listNeighbours()
     {
-        return $this->get('/reports/droplet_neighbors');
+        return $this->get('reports/droplet_neighbors');
     }
 }

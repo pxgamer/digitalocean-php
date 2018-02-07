@@ -22,7 +22,7 @@ class Droplet extends Sector
      */
     public function getDroplet()
     {
-        return $this->get('/droplets/'.$this->dropletId);
+        return $this->get('droplets/'.$this->dropletId);
     }
 
     /**
@@ -34,7 +34,7 @@ class Droplet extends Sector
      */
     public function createDroplet(\stdClass $attributes)
     {
-        return $this->post('/droplets', $attributes);
+        return $this->post('droplets', $attributes);
     }
 
     /**
@@ -42,7 +42,7 @@ class Droplet extends Sector
      */
     public function deleteDroplet()
     {
-        return $this->delete('/droplets/'.$this->dropletId);
+        return $this->delete('droplets/'.$this->dropletId);
     }
 
     /**
@@ -50,7 +50,7 @@ class Droplet extends Sector
      */
     public function listNeighbours()
     {
-        return $this->get('/droplets/'.$this->dropletId.'/neighbors');
+        return $this->get('droplets/'.$this->dropletId.'/neighbors');
     }
 
     /**
@@ -62,7 +62,7 @@ class Droplet extends Sector
     {
         $name = $name ?? date('Y-m-d_h.m.s');
 
-        return $this->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('droplets/'.$this->dropletId.'/actions', [
             'type' => 'snapshot',
             'name' => $name,
         ]);
@@ -73,7 +73,7 @@ class Droplet extends Sector
      */
     public function enableBackups()
     {
-        return $this->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('droplets/'.$this->dropletId.'/actions', [
             'type' => 'enable_backups',
         ]);
     }
@@ -83,7 +83,7 @@ class Droplet extends Sector
      */
     public function disableBackups()
     {
-        return $this->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('droplets/'.$this->dropletId.'/actions', [
             'type' => 'enable_backups',
         ]);
     }
@@ -93,7 +93,7 @@ class Droplet extends Sector
      */
     public function reboot()
     {
-        return $this->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('droplets/'.$this->dropletId.'/actions', [
             'type' => 'reboot',
         ]);
     }
@@ -103,7 +103,7 @@ class Droplet extends Sector
      */
     public function powerCycle()
     {
-        return $this->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('droplets/'.$this->dropletId.'/actions', [
             'type' => 'power_cycle',
         ]);
     }
@@ -113,7 +113,7 @@ class Droplet extends Sector
      */
     public function shutdown()
     {
-        return $this->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('droplets/'.$this->dropletId.'/actions', [
             'type' => 'shutdown',
         ]);
     }
@@ -123,7 +123,7 @@ class Droplet extends Sector
      */
     public function powerOff()
     {
-        return $this->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('droplets/'.$this->dropletId.'/actions', [
             'type' => 'power_off',
         ]);
     }
@@ -133,7 +133,7 @@ class Droplet extends Sector
      */
     public function powerOn()
     {
-        return $this->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('droplets/'.$this->dropletId.'/actions', [
             'type' => 'power_on',
         ]);
     }
@@ -146,7 +146,7 @@ class Droplet extends Sector
      */
     public function resize($size, $increaseDiskSize = false)
     {
-        return $this->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('droplets/'.$this->dropletId.'/actions', [
             'type' => 'resize',
             'disk' => $increaseDiskSize,
             'size' => $size,
@@ -158,7 +158,7 @@ class Droplet extends Sector
      */
     public function passwordReset()
     {
-        return $this->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('droplets/'.$this->dropletId.'/actions', [
             'type' => 'password_reset',
         ]);
     }
@@ -170,7 +170,7 @@ class Droplet extends Sector
      */
     public function rename($name)
     {
-        return $this->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('droplets/'.$this->dropletId.'/actions', [
             'type' => 'rename',
             'name' => $name,
         ]);
@@ -181,7 +181,7 @@ class Droplet extends Sector
      */
     public function enableIPv6()
     {
-        return $this->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('droplets/'.$this->dropletId.'/actions', [
             'type' => 'enable_ipv6',
         ]);
     }
@@ -191,7 +191,7 @@ class Droplet extends Sector
      */
     public function enablePrivateNetworking()
     {
-        return $this->post('/droplets/'.$this->dropletId.'/actions', [
+        return $this->post('droplets/'.$this->dropletId.'/actions', [
             'type' => 'enable_private_networking',
         ]);
     }
