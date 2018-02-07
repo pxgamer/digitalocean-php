@@ -26,11 +26,11 @@ class Domains extends Sector
     }
 
     /**
-     * @param \stdClass $attributes
+     * @param array $attributes
      *
      * @return array|bool
      */
-    public function createDomain(\stdClass $attributes = null)
+    public function createDomain(array $attributes = null)
     {
         return $this->post('domains', $attributes);
     }
