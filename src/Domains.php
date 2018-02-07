@@ -38,7 +38,7 @@ class Domains extends Sector
     /**
      * @param string $domain_name
      *
-     * @return array|bool
+     * @return bool
      */
     public function deleteDomain(string $domain_name)
     {
