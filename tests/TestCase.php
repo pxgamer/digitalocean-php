@@ -4,6 +4,9 @@ namespace pxgamer\DigitalOcean;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
+/**
+ * Class TestCase
+ */
 class TestCase extends PHPUnitTestCase
 {
     /**
