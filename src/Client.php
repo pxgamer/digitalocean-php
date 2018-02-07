@@ -4,11 +4,6 @@ namespace pxgamer\DigitalOcean;
 
 /**
  * Class Client.
- *
- * @property Account  $account
- * @property Domains  $domains
- * @property Droplet  $droplet
- * @property Droplets $droplets
  */
 class Client
 {
@@ -23,11 +18,28 @@ class Client
     public $authKey;
 
     /**
-     * @param string $authKey
-     *
-     * @return void
+     * @var Account
      */
-    public function setAuthKey(string $authKey)
+    private $account;
+    /**
+     * @var Domains
+     */
+    private $domains;
+    /**
+     * @var Droplet
+     */
+    private $droplet;
+    /**
+     * @var Droplets
+     */
+    private $droplets;
+
+    /**
+     * Client constructor.
+     *
+     * @param string $authKey
+     */
+    public function __construct(string $authKey)
     {
         $this->authKey = $authKey;
     }
