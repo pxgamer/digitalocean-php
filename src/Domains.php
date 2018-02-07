@@ -30,7 +30,7 @@ class Domains extends Sector
      *
      * @return array|bool
      */
-    public function createDomain(array $attributes = null)
+    public function createDomain(array $attributes = [])
     {
         return $this->post('domains', $attributes);
     }
