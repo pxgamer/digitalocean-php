@@ -57,7 +57,7 @@ class Sector
         return \GuzzleHttp\json_decode(
             $this->guzzle
                 ->post($endpoint, [
-                    'body' => $body,
+                    'body' => \GuzzleHttp\json_encode($body),
                 ])
                 ->getBody()
                 ->getContents()
@@ -75,7 +75,7 @@ class Sector
         return \GuzzleHttp\json_decode(
             $this->guzzle
                 ->put($endpoint, [
-                    'body' => $body,
+                    'body' => \GuzzleHttp\json_encode($body),
                 ])
                 ->getBody()
                 ->getContents()
