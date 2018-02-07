@@ -138,7 +138,7 @@ $client->droplet()->getDroplet();
 _Creating a Droplet_
 
 ```php
-$dropletAttributes = (array)[
+$client->droplet()->createDroplet([
     'name' => 'example.com',       // Required
     'region' => 'nyc3',            // Required
     'size' => '512mb',             // Required
@@ -152,9 +152,7 @@ $dropletAttributes = (array)[
     'tags' => [
         'web'
     ],
-];
-
-$client->droplet()->createDroplet($dropletAttributes);
+]);
 ```
 
 _Deleting a Droplet_
