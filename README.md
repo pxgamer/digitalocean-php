@@ -29,7 +29,7 @@ $ composer require pxgamer/digitalocean-php
 
 ```php
 use \pxgamer\DigitalOcean\Client;
-$client = new Client();
+$client = new Client($apiKey);
 ```
 
 ### Classes
@@ -55,14 +55,13 @@ _Droplet_
 use \pxgamer\DigitalOcean;
 
 // Create a new Client instance
-$client   = new DigitalOcean\Client();
-$client->setAuthKey('API_KEY');
+$client   = new DigitalOcean\Client($apiKey);
 
-// Initialise a new instance of each class
-$account  = new DigitalOcean\Account($client);
-$domains  = new DigitalOcean\Domains($client);
-$droplets = new DigitalOcean\Droplets($client);
-$droplet  = new DigitalOcean\Droplet($client);
+// Retrieve a sector from the $client instance
+$client->account();
+
+// Retrieve a sector manually
+$account = new Account($apiKey);
 ```
 
 ### Methods
@@ -70,106 +69,70 @@ $droplet  = new DigitalOcean\Droplet($client);
 #### Client Class
 
 ```php
-/**
- * This is required to be initialised first.
- * It must be passed into all other classes.
- */
-use \pxgamer\DigitalOcean\Client;
-$client = new Client();
-$client->setAuthKey('API_KEY');
+$client = new \pxgamer\DigitalOcean\Client();
 ```
 
 #### Account Class
 
-_Initialise Account Class_
-
-```php
-use \pxgamer\DigitalOcean\Account;
-$account = new Account($client);
-```
-
 _Getting Account Information_
 
 ```php
-$account->getAccount();
+$client->account()->getAccount();
 ```
 
 #### Domains Class
 
-_Initialise Domains Class_
-
-```php
-use \pxgamer\DigitalOcean\Domains;
-$domains = new Domains($client);
-```
-
 _Getting a list of domains_
 
 ```php
-$domains->listDomains();
+$client->domains()->listDomains();
 ```
 
 _Getting information for a specific domain_
 
 ```php
-$domains->getDomain('example.com');
+$client->domains()->getDomain('example.com');
 ```
 
 _Create a new domain_
 
 ```php
-$domains->createDomain('example.com');
+$client->domains()->createDomain('example.com');
 ```
 
 _Deleting a domain_
 
 ```php
-$domains->deleteDomain('example.com');
+$client->domains()->deleteDomain('example.com');
 ```
 
 #### Droplets Class
 
-_Initialise Droplets Class_
-
-```php
-// Requires the Client class to be initialised
-use \pxgamer\DigitalOcean\Droplets;
-$droplets = new Droplets($client);
-```
-
 _Listing droplets_
 
 ```php
-$droplets->listDroplets();
+$client->droplets()->listDroplets();
 ```
 
 _Listing neighbours of Droplets (droplets in the same location)_
 
 ```php
-$droplets->listNeighbours();
+$client->droplets()->listNeighbours();
 ```
 
 #### Droplet Class
 
-_Initialise Droplet Class_
-
-```php
-// Requires the Client class to be initialised
-use \pxgamer\DigitalOcean\Droplet;
-$droplet = new Droplet($client);
-```
-
 _Setting the Droplet ID_
 
 ```php
-$droplet->setDroplet('DROPLET_ID');
+$client->droplet()->setDroplet($dropletId);
 ```
 
 _Getting information about a droplet_
 
 ```php
-// Requires the droplet ID to be set
-$droplet->getDroplet();
+$client->droplet()->setDroplet();
+$client->droplet()->getDroplet();
 ```
 
 _Creating a Droplet_
@@ -191,119 +154,119 @@ $dropletAttributes = (array)[
     ],
 ];
 
-$droplet->createDroplet($dropletAttributes);
+$client->droplet()->createDroplet($dropletAttributes);
 ```
 
 _Deleting a Droplet_
 
 ```php
-// Requires the droplet ID to be set
-$droplet->deleteDroplet();
+$client->droplet()->setDroplet($dropletId);
+$client->droplet()->deleteDroplet();
 ```
 
 _Listing a Droplet's neighbours_
 
 ```php
-// Requires the droplet ID to be set
-$droplet->listNeighbours();
+$client->droplet()->setDroplet($dropletId);
+$client->droplet()->listNeighbours();
 ```
 
 _Create a snapshot_
 
 ```php
-// Requires the droplet ID to be set
-$droplet->createSnapshot('SNAPSHOT-NAME');
+$client->droplet()->setDroplet($dropletId);
+$client->droplet()->createSnapshot('SNAPSHOT-NAME');
 ```
 
 _Enabling backups for a Droplet_
 
 ```php
-// Requires the droplet ID to be set
-$droplet->enableBackups();
+$client->droplet()->setDroplet($dropletId);
+$client->droplet()->enableBackups();
 ```
 
 _Disabling backups for a Droplet_
 
 ```php
-// Requires the droplet ID to be set
-$droplet->disableBackups();
+$client->droplet()->setDroplet($dropletId);
+$client->droplet()->disableBackups();
 ```
 
 _Rebooting a Droplet_
 
 ```php
-// Requires the droplet ID to be set
-$droplet->reboot();
+$client->droplet()->setDroplet($dropletId);
+$client->droplet()->reboot();
 ```
 
 _Power Cycling a Droplet_
 
 ```php
-// Requires the droplet ID to be set
-$droplet->powerCycle();
+$client->droplet()->setDroplet($dropletId);
+$client->droplet()->powerCycle();
 ```
 
 _Shutting down a Droplet_
 
 ```php
-// Requires the droplet ID to be set
-$droplet->shutdown();
+$client->droplet()->setDroplet($dropletId);
+$client->droplet()->shutdown();
 ```
 
 _Powering off a Droplet_
 
 ```php
-// Requires the droplet ID to be set
-$droplet->powerOff();
+$client->droplet()->setDroplet($dropletId);
+$client->droplet()->powerOff();
 ```
 
 _Powering on a Droplet_
 
 ```php
-// Requires the droplet ID to be set
-$droplet->powerOn();
+$client->droplet()->setDroplet($dropletId);
+$client->droplet()->powerOn();
 ```
 
 _Resizing a Droplet_
 
 ```php
+$client->droplet()->setDroplet($dropletId);
+
 /**
- * Requires the droplet ID to be set
- *
  * Attributes:
  * - $size [string] (e.g. '1gb')
  * - $increaseDiskSize [boolean] (e.g. false) - Determines whether this is a permanent resize or not
  */
 
-$droplet->resize('1gb', false);
+$client->droplet()->resize('1gb', false);
 ```
 
 _Reset a Droplet's password_
 
 ```php
-// Requires the droplet ID to be set
-$droplet->passwordReset();
+$client->droplet()->setDroplet($dropletId);
+$client->droplet()->passwordReset();
 ```
 
 _Renaming a Droplet_
 
 ```php
-// Requires the droplet ID to be set
-$droplet->rename('NEW_DROPLET_NAME');
+$client->droplet()->setDroplet($dropletId);
+$client->droplet()->rename('NEW_DROPLET_NAME');
 ```
 
 _Enable IPv6 for a Droplet_
 
 ```php
-// Requires the droplet ID to be set
-$droplet->enableIPv6();
+$client->droplet()->setDroplet($dropletId);
+$client->droplet()->enableIPv6();
 ```
 
 _Enable Private Networking for a Droplet_
 
 ```php
-// Requires the droplet ID to be set
-$droplet->enablePrivateNetworking();
+$client->droplet()->setDroplet($dropletId);
+$client->droplet()->enablePrivateNetworking();
 ```
 
 ## Change log
