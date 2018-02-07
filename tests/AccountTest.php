@@ -2,12 +2,15 @@
 
 namespace pxgamer\DigitalOcean;
 
+/**
+ * Class AccountTest
+ */
 class AccountTest extends TestCase
 {
     /**
      * @throws \Exception
      */
-    public function testCanGetAccountInstance()
+    public function testCanGetAccount()
     {
         $response = $this->client->account()->getAccount();
 
