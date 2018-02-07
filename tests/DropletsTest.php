@@ -148,49 +148,52 @@ class DropletsTest extends TestCase
     public function testCanCreateDroplet()
     {
         $mock = new MockHandler([
-            'droplet' => [
-                'id'           => 00000000,
-                'name'         => 'example.com',
-                'memory'       => 1024,
-                'vcpus'        => 1,
-                'disk'         => 25,
-                'locked'       => true,
-                'status'       => 'new',
-                'kernel'       => [
-                    'id'      => 00000000,
-                    'name'    => '...',
-                    'version' => '...',
-                ],
-                'created_at'   => '2014-11-14T16:36:31Z',
-                'features'     => [
-                    'virtio',
-                ],
-                'backup_ids'   => [],
-                'snapshot_ids' => [],
-                'image'        => [],
-                'volume_ids'   => [],
-                'size'         => [],
-                'size_slug'    => 's-1vcpu-1gb',
-                'networks'     => [],
-                'region'       => [],
-                'tags'         => [
-                    'web',
-                ],
-            ],
-            'links'   => [
-                'actions' => [
-                    [
-                        'id'   => 00000000,
-                        'rel'  => 'create',
-                        'href' => '...',
+            new Response(201, [], json_encode([
+                'droplet' => [
+                    'id'           => 00000000,
+                    'name'         => 'example.com',
+                    'memory'       => 1024,
+                    'vcpus'        => 1,
+                    'disk'         => 25,
+                    'locked'       => true,
+                    'status'       => 'new',
+                    'kernel'       => [
+                        'id'      => 00000000,
+                        'name'    => '...',
+                        'version' => '...',
+                    ],
+                    'created_at'   => '2014-11-14T16:36:31Z',
+                    'features'     => [
+                        'virtio',
+                    ],
+                    'backup_ids'   => [],
+                    'snapshot_ids' => [],
+                    'image'        => [],
+                    'volume_ids'   => [],
+                    'size'         => [],
+                    'size_slug'    => 's-1vcpu-1gb',
+                    'networks'     => [],
+                    'region'       => [],
+                    'tags'         => [
+                        'web',
                     ],
                 ],
-            ],
+                'links'   => [
+                    'actions' => [
+                        [
+                            'id'   => 00000000,
+                            'rel'  => 'create',
+                            'href' => '...',
+                        ],
+                    ],
+                ],
+            ])),
         ]);
 
         $handler = HandlerStack::create($mock);
 
-        $response = (new Droplets($this->authKey, $handler))->listNeighbours();
+        $attributes = [];
+        $response = (new Droplets($this->authKey, $handler))->createDroplet($attributes);
 
         $this->assertInstanceOf(\stdClass::class, $response);
     }
