@@ -69,15 +69,13 @@ class Client
     }
 
     /**
+     * @param string $dropletId
+     *
      * @return Droplet
      */
-    public function droplet()
+    public function droplet(string $dropletId)
     {
-        if (!($this->droplet instanceof Droplet)) {
-            $this->droplet = new Droplet($this->authKey);
-        }
-
-        return $this->droplet;
+        return $this->droplet = new Droplet($this->authKey, $dropletId);
     }
 
     /**
