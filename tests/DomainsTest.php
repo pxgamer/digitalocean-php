@@ -17,7 +17,18 @@ class DomainsTest extends TestCase
     public function testCanGetDomainsList()
     {
         $mock = new MockHandler([
-            new Response(200, [], json_encode(new \stdClass())),
+            new Response(200, [], json_encode([
+                'domains' => [
+                    [
+                        'name'      => 'example.com',
+                        'ttl'       => 1800,
+                        'zone_file' => '...',
+                    ],
+                ],
+                'links'   => [],
+                'meta'    => [],
+                'total'   => 1,
+            ])),
         ]);
 
         $handler = HandlerStack::create($mock);
@@ -33,7 +44,13 @@ class DomainsTest extends TestCase
     public function testCanGetDomain()
     {
         $mock = new MockHandler([
-            new Response(200, [], json_encode(new \stdClass())),
+            new Response(200, [], json_encode([
+                'domain' => [
+                    'name'      => 'example.com',
+                    'ttl'       => 1800,
+                    'zone_file' => '...',
+                ],
+            ])),
         ]);
 
         $handler = HandlerStack::create($mock);
@@ -49,12 +66,20 @@ class DomainsTest extends TestCase
     public function testCanCreateDomain()
     {
         $mock = new MockHandler([
-            new Response(201, [], json_encode(new \stdClass())),
+            new Response(201, [], json_encode([
+                'domain' => [
+                    'name'      => 'example.com',
+                    'ttl'       => 1800,
+                    'zone_file' => null,
+                ],
+            ])),
         ]);
 
         $handler = HandlerStack::create($mock);
 
-        $response = (new Domains($this->authKey, $handler))->createDomain('example.com');
+        $response = (new Domains($this->authKey, $handler))->createDomain([
+            'name' => 'example.com',
+        ]);
 
         $this->assertInstanceOf(\stdClass::class, $response);
     }
@@ -65,13 +90,13 @@ class DomainsTest extends TestCase
     public function testCanDeleteDomain()
     {
         $mock = new MockHandler([
-            new Response(200, [], json_encode(new \stdClass())),
+            new Response(204),
         ]);
 
         $handler = HandlerStack::create($mock);
 
         $response = (new Domains($this->authKey, $handler))->deleteDomain('example.com');
 
-        $this->assertInstanceOf(\stdClass::class, $response);
+        $this->assertTrue($response);
     }
 }
