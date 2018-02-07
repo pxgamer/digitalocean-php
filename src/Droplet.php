@@ -26,13 +26,13 @@ class Droplet extends Sector
     }
 
     /**
-     * @param \stdClass $attributes
+     * @param array $attributes
      *
      * @return array|bool
      *
      * @internal param string $name
      */
-    public function createDroplet(\stdClass $attributes)
+    public function createDroplet(array $attributes)
     {
         return $this->post('droplets', $attributes);
     }
