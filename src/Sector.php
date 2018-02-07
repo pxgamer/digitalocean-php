@@ -85,15 +85,12 @@ class Sector
     /**
      * @param string $endpoint
      *
-     * @return array|mixed
+     * @return bool
      */
     public function delete(string $endpoint)
     {
-        return \GuzzleHttp\json_decode(
-            $this->guzzle
-                ->delete($endpoint)
-                ->getBody()
-                ->getContents()
-        );
+        return $this->guzzle
+                   ->delete($endpoint)
+                   ->getStatusCode() === 204;
     }
 }
