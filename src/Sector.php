@@ -2,6 +2,8 @@
 
 namespace pxgamer\DigitalOcean;
 
+use GuzzleHttp\HandlerStack;
+
 /**
  * Class Sector
  */
@@ -16,7 +18,7 @@ class Sector
      */
     protected $guzzle;
 
-    public function __construct(string $authKey)
+    public function __construct(string $authKey, HandlerStack $mockHandler = null)
     {
         $this->authKey = $authKey;
         $this->guzzle = new \GuzzleHttp\Client([
@@ -25,6 +27,7 @@ class Sector
                 'Content-Type'  => 'application/json',
                 'Authorization' => 'Bearer '.$this->authKey,
             ],
+            'handler'  => $mockHandler,
         ]);
     }
 
@@ -37,7 +40,7 @@ class Sector
     {
         return \GuzzleHttp\json_decode(
             $this->guzzle
-                ->get(Client::BASE_URL.$endpoint)
+                ->get($endpoint)
                 ->getBody()
                 ->getContents()
         );
@@ -53,7 +56,7 @@ class Sector
     {
         return \GuzzleHttp\json_decode(
             $this->guzzle
-                ->post(Client::BASE_URL.$endpoint, [
+                ->post($endpoint, [
                     'body' => $body,
                 ])
                 ->getBody()
@@ -71,7 +74,7 @@ class Sector
     {
         return \GuzzleHttp\json_decode(
             $this->guzzle
-                ->put(Client::BASE_URL.$endpoint, [
+                ->put($endpoint, [
                     'body' => $body,
                 ])
                 ->getBody()
@@ -88,7 +91,7 @@ class Sector
     {
         return \GuzzleHttp\json_decode(
             $this->guzzle
-                ->delete(Client::BASE_URL.$endpoint)
+                ->delete($endpoint)
                 ->getBody()
                 ->getContents()
         );
