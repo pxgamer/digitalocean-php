@@ -274,6 +274,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 ## Testing
 
 ``` bash
+$ export DIGITALOCEAN_API_KEY=...
 $ composer test
 ```
 
