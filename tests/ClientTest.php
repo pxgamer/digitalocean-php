@@ -2,6 +2,7 @@
 
 namespace pxgamer\DigitalOcean;
 
+use GuzzleHttp\Exception\ClientException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,6 +20,9 @@ class ClientTest extends TestCase
      */
     private $client;
 
+    /**
+     *
+     */
     public function setUp()
     {
         $this->authKey = getenv('DIGITALOCEAN_API_KEY') ?? '';
@@ -26,15 +30,20 @@ class ClientTest extends TestCase
         $this->client = new Client($this->authKey);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testCanGetApiResponse()
     {
-        $client = new Sector($this->authKey);
-        $response = $client->get('/');
+        $this->expectException(ClientException::class);
 
-        $this->assertArrayHasKey('id', $response);
-        $this->assertArrayHasKey('message', $response);
+        $client = new Sector($this->authKey);
+        $client->get('');
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testCanGetAccountInstance()
     {
         $response = $this->client->account();
@@ -42,6 +51,9 @@ class ClientTest extends TestCase
         $this->assertInstanceOf(Account::class, $response);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testCanGetDomainsInstance()
     {
         $response = $this->client->domains();
@@ -49,6 +61,9 @@ class ClientTest extends TestCase
         $this->assertInstanceOf(Domains::class, $response);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testCanGetDropletInstance()
     {
         $response = $this->client->droplet();
@@ -56,6 +71,9 @@ class ClientTest extends TestCase
         $this->assertInstanceOf(Droplet::class, $response);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testCanGetDropletsInstance()
     {
         $response = $this->client->droplets();
