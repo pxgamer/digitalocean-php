@@ -2,18 +2,27 @@
 
 namespace pxgamer\DigitalOcean;
 
+use GuzzleHttp\HandlerStack;
+
 /**
  * Class Droplet.
  */
 class Droplet extends Sector
 {
+    /**
+     * @var string
+     */
     private $dropletId;
 
     /**
-     * @param string $dropletId
+     * @param string       $authKey
+     * @param string       $dropletId
+     * @param HandlerStack $handlerStack
      */
-    public function setDroplet(string $dropletId)
+    public function __construct(string $authKey, string $dropletId, HandlerStack $handlerStack = null)
     {
+        parent::__construct($authKey, $handlerStack);
+
         $this->dropletId = $dropletId;
     }
 
@@ -23,18 +32,6 @@ class Droplet extends Sector
     public function getDroplet()
     {
         return $this->get('droplets/'.$this->dropletId);
-    }
-
-    /**
-     * @param array $attributes
-     *
-     * @return array|bool
-     *
-     * @internal param string $name
-     */
-    public function createDroplet(array $attributes)
-    {
-        return $this->post('droplets', $attributes);
     }
 
     /**
