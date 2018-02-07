@@ -24,7 +24,7 @@ class TestCase extends PHPUnitTestCase
      */
     public function setUp()
     {
-        $this->authKey = getenv('DIGITALOCEAN_API_KEY') ?? '';
+        $this->authKey = 'dev-test-key';
 
         $this->client = new Client($this->authKey);
     }
