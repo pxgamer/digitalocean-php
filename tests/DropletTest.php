@@ -132,7 +132,7 @@ class DropletTest extends TestCase
     /**
      * @throws \Exception
      */
-    public function testCanDeleteDomain()
+    public function testCanDeleteDroplet()
     {
         $mock = new MockHandler([
             new Response(204),
@@ -143,6 +143,391 @@ class DropletTest extends TestCase
         $response = $this->getInitializedDroplet($handler)->deleteDroplet();
 
         $this->assertTrue($response);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testCanListNeighbours()
+    {
+        $mock = new MockHandler([
+            new Response(200, [], json_encode([
+                'droplets' => [
+                    new \stdClass(),
+                    new \stdClass(),
+                ],
+            ])),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+
+        $response = $this->getInitializedDroplet($handler)->listNeighbours();
+
+        $this->assertInstanceOf(\stdClass::class, $response);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testCanCreateSnapshot()
+    {
+        $mock = new MockHandler([
+            new Response(201, [], json_encode([
+                'action' => [
+                    'id'            => 000000,
+                    'status'        => 'in-progress',
+                    'type'          => 'snapshot',
+                    'started_at'    => '2018-02-08T00:00:00Z',
+                    'completed_at'  => null,
+                    'resource_id'   => 000000,
+                    'resource_type' => 'droplet',
+                    'region'        => 'nyc3',
+                    'region_slug'   => 'nyc3',
+                ],
+            ])),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+
+        $response = $this->getInitializedDroplet($handler)->createSnapshot('test-snapshot');
+
+        $this->assertInstanceOf(\stdClass::class, $response);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testCanEnableBackups()
+    {
+        $mock = new MockHandler([
+            new Response(201, [], json_encode([
+                'action' => [
+                    'id'            => 000000,
+                    'status'        => 'in-progress',
+                    'type'          => 'enable_backups',
+                    'started_at'    => '2018-02-08T00:00:00Z',
+                    'completed_at'  => null,
+                    'resource_id'   => 000000,
+                    'resource_type' => 'droplet',
+                    'region'        => 'nyc3',
+                    'region_slug'   => 'nyc3',
+                ],
+            ])),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+
+        $response = $this->getInitializedDroplet($handler)->enableBackups();
+
+        $this->assertInstanceOf(\stdClass::class, $response);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testCanDisableBackups()
+    {
+        $mock = new MockHandler([
+            new Response(201, [], json_encode([
+                'action' => [
+                    'id'            => 000000,
+                    'status'        => 'in-progress',
+                    'type'          => 'disable_backups',
+                    'started_at'    => '2018-02-08T00:00:00Z',
+                    'completed_at'  => null,
+                    'resource_id'   => 000000,
+                    'resource_type' => 'droplet',
+                    'region'        => 'nyc3',
+                    'region_slug'   => 'nyc3',
+                ],
+            ])),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+
+        $response = $this->getInitializedDroplet($handler)->disableBackups();
+
+        $this->assertInstanceOf(\stdClass::class, $response);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testCanReboot()
+    {
+        $mock = new MockHandler([
+            new Response(201, [], json_encode([
+                'action' => [
+                    'id'            => 000000,
+                    'status'        => 'in-progress',
+                    'type'          => 'reboot',
+                    'started_at'    => '2018-02-08T00:00:00Z',
+                    'completed_at'  => null,
+                    'resource_id'   => 000000,
+                    'resource_type' => 'droplet',
+                    'region'        => 'nyc3',
+                    'region_slug'   => 'nyc3',
+                ],
+            ])),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+
+        $response = $this->getInitializedDroplet($handler)->reboot();
+
+        $this->assertInstanceOf(\stdClass::class, $response);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testCanPowerCycle()
+    {
+        $mock = new MockHandler([
+            new Response(201, [], json_encode([
+                'action' => [
+                    'id'            => 000000,
+                    'status'        => 'in-progress',
+                    'type'          => 'power_cycle',
+                    'started_at'    => '2018-02-08T00:00:00Z',
+                    'completed_at'  => null,
+                    'resource_id'   => 000000,
+                    'resource_type' => 'droplet',
+                    'region'        => 'nyc3',
+                    'region_slug'   => 'nyc3',
+                ],
+            ])),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+
+        $response = $this->getInitializedDroplet($handler)->powerCycle();
+
+        $this->assertInstanceOf(\stdClass::class, $response);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testCanShutdown()
+    {
+        $mock = new MockHandler([
+            new Response(201, [], json_encode([
+                'action' => [
+                    'id'            => 000000,
+                    'status'        => 'in-progress',
+                    'type'          => 'shutdown',
+                    'started_at'    => '2018-02-08T00:00:00Z',
+                    'completed_at'  => null,
+                    'resource_id'   => 000000,
+                    'resource_type' => 'droplet',
+                    'region'        => 'nyc3',
+                    'region_slug'   => 'nyc3',
+                ],
+            ])),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+
+        $response = $this->getInitializedDroplet($handler)->shutdown();
+
+        $this->assertInstanceOf(\stdClass::class, $response);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testCanPowerOff()
+    {
+        $mock = new MockHandler([
+            new Response(201, [], json_encode([
+                'action' => [
+                    'id'            => 000000,
+                    'status'        => 'in-progress',
+                    'type'          => 'power_off',
+                    'started_at'    => '2018-02-08T00:00:00Z',
+                    'completed_at'  => null,
+                    'resource_id'   => 000000,
+                    'resource_type' => 'droplet',
+                    'region'        => 'nyc3',
+                    'region_slug'   => 'nyc3',
+                ],
+            ])),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+
+        $response = $this->getInitializedDroplet($handler)->powerOff();
+
+        $this->assertInstanceOf(\stdClass::class, $response);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testCanPowerOn()
+    {
+        $mock = new MockHandler([
+            new Response(201, [], json_encode([
+                'action' => [
+                    'id'            => 000000,
+                    'status'        => 'in-progress',
+                    'type'          => 'power_on',
+                    'started_at'    => '2018-02-08T00:00:00Z',
+                    'completed_at'  => null,
+                    'resource_id'   => 000000,
+                    'resource_type' => 'droplet',
+                    'region'        => 'nyc3',
+                    'region_slug'   => 'nyc3',
+                ],
+            ])),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+
+        $response = $this->getInitializedDroplet($handler)->powerOn();
+
+        $this->assertInstanceOf(\stdClass::class, $response);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testCanResize()
+    {
+        $mock = new MockHandler([
+            new Response(201, [], json_encode([
+                'action' => [
+                    'id'            => 000000,
+                    'status'        => 'in-progress',
+                    'type'          => 'resize',
+                    'started_at'    => '2018-02-08T00:00:00Z',
+                    'completed_at'  => null,
+                    'resource_id'   => 000000,
+                    'resource_type' => 'droplet',
+                    'region'        => 'nyc3',
+                    'region_slug'   => 'nyc3',
+                ],
+            ])),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+
+        $response = $this->getInitializedDroplet($handler)->resize('1gb', true);
+
+        $this->assertInstanceOf(\stdClass::class, $response);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testCanResetPassword()
+    {
+        $mock = new MockHandler([
+            new Response(201, [], json_encode([
+                'action' => [
+                    'id'            => 000000,
+                    'status'        => 'in-progress',
+                    'type'          => 'password_reset',
+                    'started_at'    => '2018-02-08T00:00:00Z',
+                    'completed_at'  => null,
+                    'resource_id'   => 000000,
+                    'resource_type' => 'droplet',
+                    'region'        => 'nyc3',
+                    'region_slug'   => 'nyc3',
+                ],
+            ])),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+
+        $response = $this->getInitializedDroplet($handler)->passwordReset();
+
+        $this->assertInstanceOf(\stdClass::class, $response);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testCanRename()
+    {
+        $mock = new MockHandler([
+            new Response(201, [], json_encode([
+                'action' => [
+                    'id'            => 000000,
+                    'status'        => 'in-progress',
+                    'type'          => 'rename',
+                    'started_at'    => '2018-02-08T00:00:00Z',
+                    'completed_at'  => null,
+                    'resource_id'   => 000000,
+                    'resource_type' => 'droplet',
+                    'region'        => 'nyc3',
+                    'region_slug'   => 'nyc3',
+                ],
+            ])),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+
+        $response = $this->getInitializedDroplet($handler)->rename('new-droplet-name');
+
+        $this->assertInstanceOf(\stdClass::class, $response);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testCanEnableIPv6()
+    {
+        $mock = new MockHandler([
+            new Response(201, [], json_encode([
+                'action' => [
+                    'id'            => 000000,
+                    'status'        => 'in-progress',
+                    'type'          => 'enable_ipv6',
+                    'started_at'    => '2018-02-08T00:00:00Z',
+                    'completed_at'  => null,
+                    'resource_id'   => 000000,
+                    'resource_type' => 'droplet',
+                    'region'        => 'nyc3',
+                    'region_slug'   => 'nyc3',
+                ],
+            ])),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+
+        $response = $this->getInitializedDroplet($handler)->enableIPv6();
+
+        $this->assertInstanceOf(\stdClass::class, $response);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testCanEnablePrivateNetworking()
+    {
+        $mock = new MockHandler([
+            new Response(201, [], json_encode([
+                'action' => [
+                    'id'            => 000000,
+                    'status'        => 'in-progress',
+                    'type'          => 'enable_private_networking',
+                    'started_at'    => '2018-02-08T00:00:00Z',
+                    'completed_at'  => null,
+                    'resource_id'   => 000000,
+                    'resource_type' => 'droplet',
+                    'region'        => 'nyc3',
+                    'region_slug'   => 'nyc3',
+                ],
+            ])),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+
+        $response = $this->getInitializedDroplet($handler)->enablePrivateNetworking();
+
+        $this->assertInstanceOf(\stdClass::class, $response);
     }
 
     /**
