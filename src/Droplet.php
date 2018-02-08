@@ -141,7 +141,7 @@ class Droplet extends Sector
      *
      * @return array|bool
      */
-    public function resize($size, $increaseDiskSize = false)
+    public function resize(string $size, bool $increaseDiskSize = false)
     {
         return $this->post('droplets/'.$this->dropletId.'/actions', [
             'type' => 'resize',
@@ -165,7 +165,7 @@ class Droplet extends Sector
      *
      * @return array|bool
      */
-    public function rename($name)
+    public function rename(string $name)
     {
         return $this->post('droplets/'.$this->dropletId.'/actions', [
             'type' => 'rename',
